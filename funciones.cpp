@@ -14,12 +14,10 @@ string leer_archivo(string nombre_archivo) {
         return "";
     }
 
-    string linea;
-    while (getline(archivo, linea)) {
-        contenido += linea;
-        if (!archivo.eof()) {
-            contenido += "\n";
-        }
+    // Leer TODO el contenido sin agregar \n
+    char c;
+    while (archivo.get(c)) {
+        contenido += c;
     }
 
     archivo.close();

@@ -10,6 +10,7 @@ using namespace std;
 const double COSTO = 1000.0;
 const int SEMILLA = 4;
 
+
 //verifica si existe el sudoroso, sino lo crea y lo codifica
 void crear_sudo() {
     ifstream test("sudo.txt");
@@ -22,9 +23,9 @@ void crear_sudo() {
     }
     test.close();
 }
-//mira si existe o no
+
 bool validar_admin() {
-    string password;
+    string password;  // ← Quitar la inicialización
     cout << "Password administrador: ";
     cin >> password;
 
@@ -36,13 +37,22 @@ bool validar_admin() {
 
     string sudo_decodificado = binario_a_texto(decodificar_metodo1(sudo_codificado, SEMILLA));
 
+    // Limpiar espacios y saltos de línea
     while (!sudo_decodificado.empty() &&
-           (sudo_decodificado.back() == '\n' || sudo_decodificado.back() == '\r')) {
+           (sudo_decodificado.back() == '\n' ||
+            sudo_decodificado.back() == '\r' ||
+            sudo_decodificado.back() == ' ')) {
         sudo_decodificado.pop_back();
     }
 
+    // Debug: descomentar para ver qué está pasando
+    // cout << "Password ingresado: [" << password << "]" << endl;
+    // cout << "Password esperado: [" << sudo_decodificado << "]" << endl;
+
     return password == sudo_decodificado;
 }
+//mira si existe o no
+
 
 void registrar_usuario() {
     ofstream archivo("usuarios.txt", ios::app);
@@ -242,7 +252,6 @@ void retirar_dinero(string cedula) {
 void banco() {
     cout << "\n SISTEMA BANCARIO" << endl;
     crear_sudo();
-
     while (true) {
         cout << "\n1. Administrador" << endl;
         cout << "2. Cliente" << endl;
