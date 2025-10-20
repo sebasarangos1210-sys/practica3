@@ -239,8 +239,8 @@ void retirar_dinero(string cedula) {
     guardar_transaccion(cedula, "RETIRO", cantidad);
 }
 
-void sistema_bancario() {
-    cout << "\n=== SISTEMA BANCARIO ===" << endl;
+void banco() {
+    cout << "\n SISTEMA BANCARIO" << endl;
     crear_sudo();
 
     while (true) {

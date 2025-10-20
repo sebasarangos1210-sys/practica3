@@ -114,7 +114,7 @@ int main() {
         escribir_archivo(salida, texto);
 
     } else if (opcion == 3) {
-        sistema_bancario();
+        banco();
 
     } else {
         cout << "Opcion invalida" << endl;
