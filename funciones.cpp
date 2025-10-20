@@ -38,7 +38,7 @@ void escribir_archivo(string nombre_archivo, string contenido) {
     archivo.close();
     cout << "Archivo guardado: " << nombre_archivo << endl;
 }
-
+//me crea una mascara de bits para extraer cada bit
 string texto_a_binario(string texto) {
     string binario = "";
 

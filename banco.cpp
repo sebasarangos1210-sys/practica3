@@ -8,9 +8,9 @@
 using namespace std;
 
 const double COSTO = 1000.0;
-const int METODO = 1;
 const int SEMILLA = 4;
 
+//verifica si existe el sudoroso, sino lo crea y lo codifica
 void crear_sudo() {
     ifstream test("sudo.txt");
     if (!test) {
@@ -22,7 +22,7 @@ void crear_sudo() {
     }
     test.close();
 }
-
+//mira si existe o no
 bool validar_admin() {
     string password;
     cout << "Password administrador: ";
@@ -72,7 +72,7 @@ void registrar_usuario() {
         cout << "Saldo no puede ser negativo" << endl;
         return;
     }
-
+//guarda los cambios
     archivo << cedula << "," << clave << "," << saldo << "\n";
     archivo.close();
     cout << "Usuario registrado exitosamente" << endl;
@@ -89,7 +89,7 @@ void guardar_transaccion(string cedula, string tipo, double monto) {
         archivo.close();
     }
 }
-
+//autentica a ver si existe
 bool login_usuario(string& cedula_logueada) {
     string cedula, clave;
     cout << "Cedula: ";
@@ -122,7 +122,7 @@ bool login_usuario(string& cedula_logueada) {
     archivo.close();
     return false;
 }
-
+//modifica el saldo, yendo linea por linea
 void actualizar_saldo(string cedula, double nuevo_saldo) {
     ifstream entrada("usuarios.txt");
     if (!entrada) {
@@ -200,7 +200,7 @@ void consultar_saldo(string cedula) {
     cout << "Saldo: $" << saldo << " (costo: $" << COSTO << ")" << endl;
     guardar_transaccion(cedula, "CONSULTA", COSTO);
 }
-
+//aca ya es el retiro del money
 void retirar_dinero(string cedula) {
     double saldo = obtener_saldo(cedula);
 
@@ -238,7 +238,7 @@ void retirar_dinero(string cedula) {
     cout << "Nuevo saldo: $" << saldo << endl;
     guardar_transaccion(cedula, "RETIRO", cantidad);
 }
-
+//aqui se inicia el programa, para que funcione asi bien bacano
 void banco() {
     cout << "\n SISTEMA BANCARIO" << endl;
     crear_sudo();
@@ -251,7 +251,7 @@ void banco() {
 
         int opcion;
         cin >> opcion;
-
+// cin fail se devuelve cuando se equivoca, el clear lo limpia e ignora mil caracteres
         if (cin.fail()) {
             cin.clear();
             cin.ignore(10000, '\n');

@@ -77,27 +77,27 @@ string decodificar_metodo2(string binario, int n) {
     for (int i = 0; i < binario.length(); i += n) {
         string bloque = binario.substr(i, n);
 
-        // Rellenar con ceros si es necesario
+        //rellenar con ceros si es necesario
         while (bloque.length() < n) {
             bloque += "0";
         }
 
-        // Desplazamiento inverso: desplazar a la DERECHA
-        // En codificación: último bit → primera posición
-        // En decodificación: primera posición → última posición
+        //desplazamiento inverso: desplazar a la derecha
+        //en codificación: último bit va a la primera posición
+        //en decodificación: primera posición va a la última posición
         if (bloque.length() > 1) {
             string bloque_decodificado = "";
 
-            // Tomar desde el segundo bit hasta el final
+            //tomar desde el segundo bit hasta el final
             for (int j = 1; j < bloque.length(); j++) {
                 bloque_decodificado += bloque[j];
             }
-            // El primer bit va al final
+            //el primer bit va al final
             bloque_decodificado += bloque[0];
 
             resultado += bloque_decodificado;
         } else {
-            // Si solo hay 1 bit, no hay desplazamiento
+            //si solo hay 1 bit, no hay desplazamiento
             resultado += bloque;
         }
     }
