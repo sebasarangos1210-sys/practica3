@@ -79,3 +79,33 @@ string codificar_metodo1(string binario, int n) {
     }
     return resultado;
 }
+
+string codificar_metodo2(string binario, int n) {
+    string resultado = "";
+
+    // Recorrer en bloques de 'n' bits
+    for (int i = 0; i < binario.length(); i += n) {
+        string bloque = binario.substr(i, n);
+
+        // Rellenar con ceros si es necesario
+        while (bloque.length() < n) {
+            bloque += "0";
+        }
+
+        // Rotación a la izquierda: primer bit pasa al final
+        if (bloque.length() > 1) {
+            string bloque_rotado = "";
+            // Copiar todos los bits excepto el primero
+            for (int j = 1; j < bloque.length(); j++) {
+                bloque_rotado += bloque[j];
+            }
+            // Añadir el primer bit al final
+            bloque_rotado += bloque[0];
+            resultado += bloque_rotado;
+        } else {
+            // Si solo hay 1 bit, no hay rotación
+            resultado += bloque;
+        }
+    }
+    return resultado;
+}
