@@ -11,7 +11,7 @@ const double COSTO = 1000.0;
 const int SEMILLA = 4;
 
 
-//verifica si existe el sudoroso, sino lo crea y lo codifica
+//verifica si existe el sudo, sino lo crea y lo codifica
 void crear_sudo() {
     ifstream test("sudo.txt");
     if (!test) {
@@ -25,7 +25,7 @@ void crear_sudo() {
 }
 
 bool validar_admin() {
-    string password;  // ← Quitar la inicialización
+    string password;
     cout << "Password administrador: ";
     cin >> password;
 
@@ -37,7 +37,6 @@ bool validar_admin() {
 
     string sudo_decodificado = binario_a_texto(decodificar_metodo1(sudo_codificado, SEMILLA));
 
-    // Limpiar espacios y saltos de línea
     while (!sudo_decodificado.empty() &&
            (sudo_decodificado.back() == '\n' ||
             sudo_decodificado.back() == '\r' ||
@@ -45,15 +44,14 @@ bool validar_admin() {
         sudo_decodificado.pop_back();
     }
 
-    // Debug: descomentar para ver qué está pasando
+    // Debug: aui tuve todo el problema toda la mañana
     // cout << "Password ingresado: [" << password << "]" << endl;
     // cout << "Password esperado: [" << sudo_decodificado << "]" << endl;
 
     return password == sudo_decodificado;
 }
+
 //mira si existe o no
-
-
 void registrar_usuario() {
     ofstream archivo("usuarios.txt", ios::app);
     if (!archivo) {

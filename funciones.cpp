@@ -14,7 +14,7 @@ string leer_archivo(string nombre_archivo) {
         return "";
     }
 
-    // Leer TODO el contenido sin agregar \n
+    //aqui tuve un problema, porque tenia un salto de linea, me daba otros valores de la trabla ASCII
     char c;
     while (archivo.get(c)) {
         contenido += c;
@@ -63,13 +63,13 @@ string binario_a_texto(string binario) {
     // Procesar en bloques de 8 bits
     for (int i = 0; i < binario.length(); i += 8) {
         if (i + 8 > binario.length()) {
-            break; // Ignorar bits incompletos al final
+            break; //ignorar bits incompletos al final
         }
 
         string byte_str = binario.substr(i, 8);
         int valor = 0;
 
-        // Convertir binario a decimal
+        //convertir binario a decimal
         for (int j = 0; j < 8; j++) {
             valor = valor * 2;
             if (byte_str[j] == '1') {
