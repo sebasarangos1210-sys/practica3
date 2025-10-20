@@ -3,6 +3,11 @@
 
 using namespace std;
 
+#include <string>
+#include "decodificacion.h"
+
+using namespace std;
+
 string decodificar_metodo1(string binario, int n) {
     string resultado = "";
     string bloque_anterior_decodificado = "";
@@ -74,26 +79,28 @@ string decodificar_metodo1(string binario, int n) {
         bloque_anterior_decodificado = bloque_decodificado;
     }
     return resultado;
-    string decodificar_metodo2(string binario, int n) {
-        string resultado = "";
+}
 
-        for (int i = 0; i < binario.length(); i += n) {
-            string bloque = binario.substr(i, n);
+string decodificar_metodo2(string binario, int n) {
+    string resultado = "";
 
-            while (bloque.length() < n) {
-                bloque += "0";
-            }
+    for (int i = 0; i < binario.length(); i += n) {
+        string bloque = binario.substr(i, n);
 
-            if (bloque.length() > 1) {
-                string bloque_decodificado = "";
-                bloque_decodificado += bloque[bloque.length() - 1];
-                for (int j = 0; j < bloque.length() - 1; j++) {
-                    bloque_decodificado += bloque[j];
-                }
-                resultado += bloque_decodificado;
-            } else {
-                resultado += bloque;
-            }
+        while (bloque.length() < n) {
+            bloque += "0";
         }
-        return resultado;
+
+        if (bloque.length() > 1) {
+            string bloque_decodificado = "";
+            bloque_decodificado += bloque[bloque.length() - 1];
+            for (int j = 0; j < bloque.length() - 1; j++) {
+                bloque_decodificado += bloque[j];
+            }
+            resultado += bloque_decodificado;
+        } else {
+            resultado += bloque;
+        }
     }
+    return resultado;
+}
