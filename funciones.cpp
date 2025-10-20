@@ -16,7 +16,10 @@ string leer_archivo(string nombre_archivo) {
 
     string linea;
     while (getline(archivo, linea)) {
-        contenido += linea + "\n";
+        contenido += linea;
+        if (!archivo.eof()) {
+            contenido += "\n";
+        }
     }
 
     archivo.close();
@@ -43,6 +46,7 @@ string texto_a_binario(string texto) {
         char c = texto[i];
         int ascii = (int)c;
 
+        // Convertir a binario de 8 bits
         for (int j = 7; j >= 0; j--) {
             if (ascii & (1 << j)) {
                 binario += "1";
@@ -51,16 +55,23 @@ string texto_a_binario(string texto) {
             }
         }
     }
+
     return binario;
 }
 
 string binario_a_texto(string binario) {
     string texto = "";
 
+    // Procesar en bloques de 8 bits
     for (int i = 0; i < binario.length(); i += 8) {
+        if (i + 8 > binario.length()) {
+            break; // Ignorar bits incompletos al final
+        }
+
         string byte_str = binario.substr(i, 8);
         int valor = 0;
 
+        // Convertir binario a decimal
         for (int j = 0; j < 8; j++) {
             valor = valor * 2;
             if (byte_str[j] == '1') {
@@ -70,5 +81,6 @@ string binario_a_texto(string binario) {
 
         texto += (char)valor;
     }
+
     return texto;
 }

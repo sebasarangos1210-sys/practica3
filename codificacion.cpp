@@ -1,12 +1,10 @@
 #include <string>
 #include "codificacion.h"
-
 using namespace std;
 
 string codificar_metodo1(string binario, int n) {
     string resultado = "";
 
-    //recorremos todo el binario en bloques de 'n' bits
     for (int pos = 0; pos < binario.length(); pos += n) {
         string bloque_actual = binario.substr(pos, n);
 
@@ -15,23 +13,21 @@ string codificar_metodo1(string binario, int n) {
             bloque_actual += "0";
         }
 
-        //invertir todos los bits
+        // PRIMER BLOQUE: invertir todos los bits
         if (pos == 0) {
             for (int i = 0; i < bloque_actual.length(); i++) {
-                if (bloque_actual[i] == '0') {
-                    resultado += "1";
-                } else {
-                    resultado += "0";
-                }
+                resultado += (bloque_actual[i] == '0') ? '1' : '0';
             }
         }
-        //aplicar reglas según bloque anterior
+        // BLOQUES SIGUIENTES: aplicar reglas según bloque anterior CODIFICADO
         else {
-            string bloque_anterior = binario.substr(pos - n, n);
+            // Tomar el bloque anterior del RESULTADO (ya codificado)
+            string bloque_anterior = resultado.substr(pos - n, n);
+
             int contador_ceros = 0;
             int contador_unos = 0;
 
-            //contar 0 y 1 en el bloque anterior
+            // Contar 0s y 1s en el bloque anterior
             for (int i = 0; i < bloque_anterior.length(); i++) {
                 if (bloque_anterior[i] == '0') {
                     contador_ceros++;
@@ -40,38 +36,33 @@ string codificar_metodo1(string binario, int n) {
                 }
             }
 
-            //igual cantidad de 0 y 1 - invertir todo
+            // IGUAL cantidad: invertir cada bit
             if (contador_unos == contador_ceros) {
                 for (int i = 0; i < bloque_actual.length(); i++) {
-                    if (bloque_actual[i] == '0') {
-                        resultado += "1";
-                    } else {
-                        resultado += "0";
-                    }
+                    resultado += (bloque_actual[i] == '0') ? '1' : '0';
                 }
             }
-            //más ceros - intercambiar cada 2 bits
+            // MÁS CEROS: invertir cada 2 bits
             else if (contador_ceros > contador_unos) {
-                for (int i = 0; i < bloque_actual.length(); i += 2) {
-                    if (i + 1 < bloque_actual.length()) {
-                        resultado += bloque_actual[i + 1];
-                        resultado += bloque_actual[i];
+                for (int i = 0; i < bloque_actual.length(); i++) {
+                    if (i % 2 == 0) {
+                        // Invertir bits en posiciones pares (0, 2, 4...)
+                        resultado += (bloque_actual[i] == '0') ? '1' : '0';
                     } else {
+                        // Mantener bits en posiciones impares
                         resultado += bloque_actual[i];
                     }
                 }
             }
-            //más unos - rotar cada 3 bits
+            // MÁS UNOS: invertir cada 3 bits
             else {
-                for (int i = 0; i < bloque_actual.length(); i += 3) {
-                    if (i + 2 < bloque_actual.length()) {
-                        resultado += bloque_actual[i + 2];
-                        resultado += bloque_actual[i];
-                        resultado += bloque_actual[i + 1];
+                for (int i = 0; i < bloque_actual.length(); i++) {
+                    if (i % 3 == 0) {
+                        // Invertir bits en posiciones múltiplos de 3 (0, 3, 6...)
+                        resultado += (bloque_actual[i] == '0') ? '1' : '0';
                     } else {
-                        for (int j = i; j < bloque_actual.length(); j++) {
-                            resultado += bloque_actual[j];
-                        }
+                        // Mantener los demás bits
+                        resultado += bloque_actual[i];
                     }
                 }
             }
@@ -83,7 +74,6 @@ string codificar_metodo1(string binario, int n) {
 string codificar_metodo2(string binario, int n) {
     string resultado = "";
 
-    // Recorrer en bloques de 'n' bits
     for (int i = 0; i < binario.length(); i += n) {
         string bloque = binario.substr(i, n);
 
@@ -92,18 +82,18 @@ string codificar_metodo2(string binario, int n) {
             bloque += "0";
         }
 
-        // Rotación a la izquierda: primer bit pasa al final
+        // Rotación a la DERECHA (desplazamiento a la izquierda)
+        // Primer bit codificado = último bit original
         if (bloque.length() > 1) {
             string bloque_rotado = "";
-            // Copiar todos los bits excepto el primero
-            for (int j = 1; j < bloque.length(); j++) {
+            // El último bit va primero
+            bloque_rotado += bloque[bloque.length() - 1];
+            // Luego todos los demás bits
+            for (int j = 0; j < bloque.length() - 1; j++) {
                 bloque_rotado += bloque[j];
             }
-            // Añadir el primer bit al final
-            bloque_rotado += bloque[0];
             resultado += bloque_rotado;
         } else {
-            // Si solo hay 1 bit, no hay rotación
             resultado += bloque;
         }
     }
